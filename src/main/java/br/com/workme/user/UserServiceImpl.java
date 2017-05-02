@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Iterable<User> findAll() {
-		return userRepository.findAll();
+	public Iterable<User> findByTipo(int tipo) {
+		return userRepository.findByTipo(tipo);
 	}
 }

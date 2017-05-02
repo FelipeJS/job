@@ -22,7 +22,9 @@ public class SolicitacaoController {
 
 	private static final int ABERTO = 1;
 	private static final int ANALISE = 2;
-	
+	private static final int FECHADO = 3;
+	private static final int RECUSADO = 4;
+
 	@Autowired
 	private SolicitacaoRepository solicitacaoRepository;
 
@@ -40,7 +42,7 @@ public class SolicitacaoController {
 
 		return solicitacaoRepository.save(solicitacao);
 	}
-	
+
 	@RequestMapping(value = "/aceitar", method = POST)
 	public Solicitacao aceitar(@RequestBody Solicitacao solicitacao) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,6 +50,24 @@ public class SolicitacaoController {
 
 		solicitacao.setUserAnalise(user);
 		solicitacao.setStatus(ANALISE);
+
+		return solicitacaoRepository.save(solicitacao);
+	}
+
+	@RequestMapping(value = "/finalizar", method = POST)
+	public Solicitacao finalizar(@RequestBody Solicitacao solicitacao) {
+		solicitacao.setStatus(FECHADO);
+
+		return solicitacaoRepository.save(solicitacao);
+	}
+
+	@RequestMapping(value = "/recusar", method = POST)
+	public Solicitacao recusar(@RequestBody Solicitacao solicitacao) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+
+		solicitacao.setUserAnalise(user);
+		solicitacao.setStatus(RECUSADO);
 
 		return solicitacaoRepository.save(solicitacao);
 	}

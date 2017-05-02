@@ -5,7 +5,7 @@ public interface UserService {
 
 	public User findUserById(Long id);
 
-	public Iterable<User> findAll();
+	public Iterable<User> findByTipo(int tipo);
 
 	public void saveUser(User user);
 }

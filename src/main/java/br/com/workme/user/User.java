@@ -53,6 +53,7 @@ public class User {
 	@Column(name = "active")
 	private int active;
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
@@ -79,7 +80,7 @@ public class User {
 	private String estado;
 
 	@Column(name = "tipo")
-	private String tipo;
+	private int tipo;
 
 	@Column(name = "categoria")
 	private String categoria;
@@ -100,7 +101,6 @@ public class User {
 		this.email = email;
 	}
 
-	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -197,11 +197,11 @@ public class User {
 		this.estado = estado;
 	}
 
-	public String getTipo() {
+	public int getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
 

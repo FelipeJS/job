@@ -8,4 +8,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 			+ "INNER JOIN user U ON U.USER_ID = S.USER_ID "
 			+ "WHERE V.USER_ID = ?1", nativeQuery = true)
 	public Iterable<Solicitacao> findByUserId(Long userId);
+	
+	public Solicitacao findOneByCdSolicitacao(Long cdSolicitacao);
 }

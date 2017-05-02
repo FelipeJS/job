@@ -1,5 +1,8 @@
 package br.com.workme.user;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,24 +10,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class LoginController {
 
+	private static final int CLIENTE = 1;
+	private static final int EMPRESA = 2;
+
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/login" }, method = GET)
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	@RequestMapping(value = "/registration", method = GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
@@ -33,7 +38,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/registration", method = POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
@@ -53,7 +58,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/home", method = GET)
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -64,8 +69,13 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping("/listar")
-	public Iterable<User> listar() {
-		return userService.findAll();
+	@RequestMapping("/listarClientes")
+	public Iterable<User> listarClientes() {
+		return userService.findByTipo(CLIENTE);
+	}
+
+	@RequestMapping("/listarEmpresas")
+	public Iterable<User> listarEmpresas() {
+		return userService.findByTipo(EMPRESA);
 	}
 }
