@@ -1,4 +1,4 @@
-package br.com.workme.curte;
+package br.com.workme.curtida;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +11,12 @@ import javax.persistence.ManyToOne;
 import br.com.workme.user.User;
 
 @Entity
-public class Curte {
+public class Curtida {
 
 	@Id
-	@Column(name = "cd_curte")
+	@Column(name = "cd_curtida")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long cdCurte;
+	private Long cdCurtida;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -28,12 +28,12 @@ public class Curte {
 
 	private Boolean curtiu;
 
-	public Long getCdCurte() {
-		return cdCurte;
+	public Long getCdCurtida() {
+		return cdCurtida;
 	}
 
-	public void setCdCurte(Long cdCurte) {
-		this.cdCurte = cdCurte;
+	public void setCdCurtida(Long cdCurtida) {
+		this.cdCurtida = cdCurtida;
 	}
 
 	public User getUser() {
@@ -59,5 +59,4 @@ public class Curte {
 	public void setCurtiu(Boolean curtiu) {
 		this.curtiu = curtiu;
 	}
-
 }
