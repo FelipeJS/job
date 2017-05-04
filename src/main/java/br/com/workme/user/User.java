@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -23,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.workme.role.Role;
 
 @Entity
-@Table(name = "user")
 public class User {
 
 	@Id
@@ -31,23 +29,23 @@ public class User {
 	@Column(name = "user_id")
 	private Long id;
 
-	@Column(name = "email")
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
+	@Column(name = "email", unique = true)
+	@Email(message = "*Utilize um email válido")
+	@NotEmpty(message = "*Preencha o email")
 	private String email;
 
 	@Column(name = "password")
-	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
+	@Length(min = 5, message = "*Senha precisa ter pelo menos 5 caracteres")
+	@NotEmpty(message = "*Preencha a senha")
 	@Transient
 	private String password;
 
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
+	@NotEmpty(message = "*Preencha o nome")
 	private String name;
 
 	@Column(name = "last_name")
-	@NotEmpty(message = "*Please provide your last name")
+	@NotEmpty(message = "*Preencha o sobrenome")
 	private String lastName;
 
 	@Column(name = "active")
@@ -58,30 +56,38 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@Column(unique = true)
+	@NotEmpty(message = "*Preencha o CPF/CNPJ")
+	@Column(name = "documento", unique = true)
 	private String documento;
 
+	@NotEmpty(message = "*Preencha o nome fantasia")
 	@Column(name = "fantasia")
 	private String fantasia;
 
+	@NotEmpty(message = "*Preencha o telefone")
 	@Column(name = "telefone")
 	private String telefone;
 
+	@NotEmpty(message = "*Preencha o endereço")
 	@Column(name = "endereco")
 	private String endereco;
 
+	@NotEmpty(message = "*Preencha o bairro")
 	@Column(name = "bairro")
 	private String bairro;
 
+	@NotEmpty(message = "*Preencha a cidade")
 	@Column(name = "cidade")
 	private String cidade;
 
+	@NotEmpty(message = "*Preencha o estado")
 	@Column(name = "estado")
 	private String estado;
 
 	@Column(name = "tipo")
 	private int tipo;
 
+	@NotEmpty(message = "*Preencha a categoria")
 	@Column(name = "categoria")
 	private String categoria;
 
@@ -101,6 +107,7 @@ public class User {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -197,6 +204,7 @@ public class User {
 		this.estado = estado;
 	}
 
+	@JsonIgnore
 	public int getTipo() {
 		return tipo;
 	}

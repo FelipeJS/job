@@ -8,4 +8,6 @@ public interface UserService {
 	public Iterable<User> findByTipo(int tipo);
 
 	public void saveUser(User user);
+
+	public User update(User user);
 }

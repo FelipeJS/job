@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@CrossOrigin
 @RestController
 public class LoginController {
 
@@ -45,14 +45,13 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
-			bindingResult.rejectValue("email", "error.user",
-					"There is already a user registered with the email provided");
+			bindingResult.rejectValue("email", "error.user", "Já existe usuário cadastrado com o email informado");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.addObject("successMessage", "Usuário cadastrado com sucesso");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");
 
@@ -66,12 +65,11 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+		modelAndView.addObject("adminMessage", "Conteúdo disponível para administradores");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
 
-	@CrossOrigin
 	@RequestMapping("/listarClientes")
 	public Iterable<User> listarClientes() {
 		return userService.findByTipo(CLIENTE);
@@ -80,5 +78,15 @@ public class LoginController {
 	@RequestMapping("/listarEmpresas")
 	public Iterable<User> listarEmpresas() {
 		return userService.findByTipo(EMPRESA);
+	}
+
+	@RequestMapping(value = "/atualizar", method = POST)
+	public User atualizar(@RequestBody User user) {
+		return userService.update(user);
+	}
+
+	@RequestMapping(value = "/consultar", method = GET)
+	public User consultar(@RequestParam Long userId) {
+		return userService.findUserById(userId);
 	}
 }

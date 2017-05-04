@@ -14,7 +14,7 @@
 	
 	angular.module("work").controller("servicoCtrl", function ($scope, $http) {
 		$scope.salvar = function (servico) {
-			$http.post("http://192.168.207.159:9090/servico/salvar", servico).success(function (resultadoDoResponse) {
+			$http.post("http://localhost:9090/servico/salvar", servico).success(function (resultadoDoResponse) {
 				$scope.servico = resultadoDoResponse;
 			});
 		};		
@@ -22,15 +22,15 @@
 	
 	angular.module("work").controller("solicitacaoCtrl", function ($scope, $http) {
 		$scope.solicitacao = {};
-		$scope.solicitacao.servico = {"cdServico":1,"nome":"uai foi","categoria":"serio mesmo","descricao":"deu certo","ativo":1};
+		$scope.solicitacao.servico = {"cdServico":14,"nome":"Desenvolvimento de Software","categoria":"Engenharia do Software","descricao":"Desenvolvimento de software sob demanda para os mais diversos tipos de clientes, com excelência e garantia de qualidade.","ativo":1};
 		$scope.salvar = function (solicitacao) {
-			$http.post("http://192.168.207.159:9090/solicitacao/salvar", solicitacao).success(function (resultadoDoResponse) {
+			$http.post("http://localhost:9090/solicitacao/salvar", solicitacao).success(function (resultadoDoResponse) {
 				$scope.solicitacao = resultadoDoResponse;
 			});
 		};
 		
 		$scope.aceitar = function () {
-			$http.post("http://192.168.207.159:9090/solicitacao/aceitar", $scope.solicitacao).success(function (resultadoDoResponse) {
+			$http.post("http://localhost:9090/solicitacao/aceitar", $scope.solicitacao).success(function (resultadoDoResponse) {
 				$scope.solicitacao = resultadoDoResponse;
 			});
 		};	

@@ -6,7 +6,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.workme.user.User;
 import br.com.workme.user.UserService;
 
-@CrossOrigin
 @RestController
 @RequestMapping("servico")
 public class ServicoController {
+
+	private static final int ATIVO = 1;
 
 	@Autowired
 	private ServicoRepository servicoRepository;
@@ -30,7 +30,7 @@ public class ServicoController {
 	public Servico salvar(@RequestBody Servico servico) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		servico.setUser(userService.findUserByEmail(auth.getName()));
-		servico.setAtivo(1);
+		servico.setAtivo(ATIVO);
 		return servicoRepository.save(servico);
 	}
 
@@ -44,6 +44,6 @@ public class ServicoController {
 	@RequestMapping(value = "/listarPorUsuario", method = GET)
 	public Iterable<Servico> listarByUser(@RequestParam Long userId) {
 		User user = userService.findUserById(userId);
-		return servicoRepository.findByUserAndAtivo(user, 1);
+		return servicoRepository.findByUserAndAtivo(user, ATIVO);
 	}
 }
