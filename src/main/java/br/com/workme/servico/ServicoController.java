@@ -15,10 +15,8 @@ import br.com.workme.user.User;
 import br.com.workme.user.UserService;
 
 @RestController
-@RequestMapping("servico")
+@RequestMapping("/servico")
 public class ServicoController {
-
-	private static final int ATIVO = 1;
 
 	@Autowired
 	private ServicoRepository servicoRepository;
@@ -30,20 +28,26 @@ public class ServicoController {
 	public Servico salvar(@RequestBody Servico servico) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		servico.setUser(userService.findUserByEmail(auth.getName()));
-		servico.setAtivo(ATIVO);
 		return servicoRepository.save(servico);
+	}
+
+	@RequestMapping(value = "/excluir", method = GET)
+	public Long excluir(@RequestParam Long cdServico) {
+		Servico servico = servicoRepository.findOneByCdServico(cdServico);
+		servicoRepository.delete(servico);
+		return servico.getCdServico();
 	}
 
 	@RequestMapping("/listar")
 	public Iterable<Servico> listar() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		return servicoRepository.findByUserAndAtivo(user, 1);
+		return servicoRepository.findByUser(user);
 	}
 
 	@RequestMapping(value = "/listarPorUsuario", method = GET)
 	public Iterable<Servico> listarByUser(@RequestParam Long userId) {
 		User user = userService.findUserById(userId);
-		return servicoRepository.findByUserAndAtivo(user, ATIVO);
+		return servicoRepository.findByUser(user);
 	}
 }
