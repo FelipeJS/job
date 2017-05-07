@@ -81,12 +81,20 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/atualizar", method = POST)
-	public User atualizar(@RequestBody User user) {
-		return userService.update(user);
+	public Long atualizar(@RequestBody User user) {
+		userService.saveUser(user);
+		return user.getId();
 	}
 
 	@RequestMapping(value = "/consultar", method = GET)
 	public User consultar(@RequestParam Long userId) {
 		return userService.findUserById(userId);
+	}
+	
+	@RequestMapping(value = "/consultarUsuarioLogado", method = GET)
+	public User consultarUsuarioLogado(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		return user;
 	}
 }

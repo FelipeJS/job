@@ -50,4 +50,9 @@ public class ServicoController {
 		User user = userService.findUserById(userId);
 		return servicoRepository.findByUser(user);
 	}
+
+	@RequestMapping(value = "/consultar", method = GET)
+	public Servico consultar(@RequestParam Long cdServico) {
+		return servicoRepository.findOneByCdServico(cdServico);
+	}
 }

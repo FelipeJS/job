@@ -32,6 +32,9 @@ public class ConfiguracaoController {
 
 	@RequestMapping(value = "/salvar", method = POST)
 	public Configuracao salvar(@RequestBody Configuracao configuracao) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		configuracao.setUser(user);
 		return configuracaoRepository.save(configuracao);
 	}
 }

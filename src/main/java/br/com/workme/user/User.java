@@ -107,7 +107,6 @@ public class User {
 		this.email = email;
 	}
 
-	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -204,7 +203,6 @@ public class User {
 		this.estado = estado;
 	}
 
-	@JsonIgnore
 	public int getTipo() {
 		return tipo;
 	}

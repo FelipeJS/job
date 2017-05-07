@@ -43,9 +43,4 @@ public class UserServiceImpl implements UserService {
 	public Iterable<User> findByTipo(int tipo) {
 		return userRepository.findByTipo(tipo);
 	}
-
-	@Override
-	public User update(User user) {
-		return userRepository.save(user);
-	}
 }
