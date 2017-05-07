@@ -1,16 +1,19 @@
 package br.com.workme.solicitacao;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.workme.servico.ServicoRepository;
 import br.com.workme.user.User;
 import br.com.workme.user.UserService;
 
@@ -29,13 +32,21 @@ public class SolicitacaoController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/salvar", method = POST)
-	public Solicitacao salvar(@RequestBody Solicitacao solicitacao) {
+	@Autowired
+	private ServicoRepository servicoRepository;
+
+	@RequestMapping(value = "/salvar", method = GET)
+	public Solicitacao salvar(@RequestParam String descricao, @RequestParam Long cdServico) {
+		Solicitacao solicitacao = new Solicitacao();
+
+		solicitacao.setDescricao(descricao);
+		solicitacao.setServico(servicoRepository.findOneByCdServico(cdServico));
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-
 		solicitacao.setUser(user);
-		solicitacao.setDhSolicitacao(Calendar.getInstance().getTime());
+
+		solicitacao.setDhSolicitacao(new Date());
 		solicitacao.setStatus(ABERTO);
 
 		return solicitacaoRepository.save(solicitacao);
@@ -70,11 +81,35 @@ public class SolicitacaoController {
 		return solicitacaoRepository.save(solicitacao);
 	}
 
-	@RequestMapping("/listar")
-	public Iterable<Solicitacao> listar() {
+	@RequestMapping("/listarAbertos")
+	public Iterable<Solicitacao> listarAbertos() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 
-		return solicitacaoRepository.findByUserId(user.getId());
+		return solicitacaoRepository.findByUserIdAberto(user.getId());
+	}
+
+	@RequestMapping("/listarAnalisados")
+	public Iterable<Solicitacao> listarAnalisados() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+
+		return solicitacaoRepository.findByUserIdAnalise(user.getId());
+	}
+
+	@RequestMapping("/listarFechados")
+	public Iterable<Solicitacao> listarFechados() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+
+		return solicitacaoRepository.findByUserIdFechado(user.getId());
+	}
+
+	@RequestMapping("/listarMinhasSolicitacoes")
+	public Iterable<Solicitacao> listarMinhasSolicitacoes() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+
+		return solicitacaoRepository.findByUser(user);
 	}
 }
