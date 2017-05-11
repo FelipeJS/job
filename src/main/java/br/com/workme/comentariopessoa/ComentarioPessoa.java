@@ -12,7 +12,6 @@ import br.com.workme.user.User;
 
 @Entity
 public class ComentarioPessoa {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cd_comentario_pessoa")

@@ -1,12 +1,10 @@
 package br.com.workme.comentariosolicitacao;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +33,14 @@ public class ComentarioSolicitacaoController {
 		return comentarioSolicitacaoRepository.findBySolicitacao(solicitacao);
 	}
 
-	@RequestMapping(value = "/salvar", method = POST)
-	public ComentarioSolicitacao salvar(@RequestBody ComentarioSolicitacao comentarioSolicitacao) {
+	@RequestMapping(value = "/salvar", method = GET)
+	public ComentarioSolicitacao salvar(@RequestParam Long cdSolicitacao, @RequestParam String descricao) {
+		Solicitacao solicitacao = solicitacaoRepository.findOneByCdSolicitacao(cdSolicitacao);
+
+		ComentarioSolicitacao comentarioSolicitacao = new ComentarioSolicitacao();
+		comentarioSolicitacao.setSolicitacao(solicitacao);
+		comentarioSolicitacao.setDescricao(descricao);
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 
