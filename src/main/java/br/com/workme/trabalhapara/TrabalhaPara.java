@@ -20,7 +20,7 @@ public class TrabalhaPara {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
-	private User user;
+	private User userEmpresa;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id_funcionario", referencedColumnName = "user_id")
@@ -34,12 +34,12 @@ public class TrabalhaPara {
 		this.cdTrabalhaPara = cdTrabalhaPara;
 	}
 
-	public User getUser() {
-		return user;
+	public User getUserEmpresa() {
+		return userEmpresa;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserEmpresa(User userEmpresa) {
+		this.userEmpresa = userEmpresa;
 	}
 
 	public User getUserFuncionario() {

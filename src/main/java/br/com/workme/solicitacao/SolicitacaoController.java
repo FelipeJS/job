@@ -35,17 +35,18 @@ public class SolicitacaoController {
 	@Autowired
 	private ServicoRepository servicoRepository;
 
+	public User getUsuarioLogado() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userService.findUserByEmail(auth.getName());
+	}
+
 	@RequestMapping(value = "/salvar", method = GET)
 	public Solicitacao salvar(@RequestParam String descricao, @RequestParam Long cdServico) {
 		Solicitacao solicitacao = new Solicitacao();
 
 		solicitacao.setDescricao(descricao);
 		solicitacao.setServico(servicoRepository.findOneByCdServico(cdServico));
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		solicitacao.setUser(user);
-
+		solicitacao.setUser(getUsuarioLogado());
 		solicitacao.setDhSolicitacao(new Date());
 		solicitacao.setStatus(ABERTO);
 
@@ -54,10 +55,7 @@ public class SolicitacaoController {
 
 	@RequestMapping(value = "/aceitar", method = POST)
 	public Solicitacao aceitar(@RequestBody Solicitacao solicitacao) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		solicitacao.setUserAnalise(user);
+		solicitacao.setUserAnalise(getUsuarioLogado());
 		solicitacao.setStatus(ANALISE);
 
 		return solicitacaoRepository.save(solicitacao);
@@ -72,10 +70,7 @@ public class SolicitacaoController {
 
 	@RequestMapping(value = "/recusar", method = POST)
 	public Solicitacao recusar(@RequestBody Solicitacao solicitacao) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		solicitacao.setUserAnalise(user);
+		solicitacao.setUserAnalise(getUsuarioLogado());
 		solicitacao.setStatus(RECUSADO);
 
 		return solicitacaoRepository.save(solicitacao);
@@ -83,33 +78,21 @@ public class SolicitacaoController {
 
 	@RequestMapping("/listarAbertos")
 	public Iterable<Solicitacao> listarAbertos() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		return solicitacaoRepository.findByUserIdAberto(user.getId());
+		return solicitacaoRepository.findByUserIdAberto(getUsuarioLogado().getId());
 	}
 
 	@RequestMapping("/listarAnalisados")
 	public Iterable<Solicitacao> listarAnalisados() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		return solicitacaoRepository.findByUserIdAnalise(user.getId());
+		return solicitacaoRepository.findByUserIdAnalise(getUsuarioLogado().getId());
 	}
 
 	@RequestMapping("/listarFechados")
 	public Iterable<Solicitacao> listarFechados() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		return solicitacaoRepository.findByUserIdFechado(user.getId());
+		return solicitacaoRepository.findByUserIdFechado(getUsuarioLogado().getId());
 	}
 
 	@RequestMapping("/listarMinhasSolicitacoes")
 	public Iterable<Solicitacao> listarMinhasSolicitacoes() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-
-		return solicitacaoRepository.findByUser(user);
+		return solicitacaoRepository.findByUser(getUsuarioLogado());
 	}
 }

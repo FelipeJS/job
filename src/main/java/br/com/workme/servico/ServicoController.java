@@ -24,10 +24,14 @@ public class ServicoController {
 	@Autowired
 	private UserService userService;
 
+	public User getUsuarioLogado(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userService.findUserByEmail(auth.getName());
+	}
+	
 	@RequestMapping(value = "/salvar", method = POST)
 	public Servico salvar(@RequestBody Servico servico) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		servico.setUser(userService.findUserByEmail(auth.getName()));
+		servico.setUser(getUsuarioLogado());
 		return servicoRepository.save(servico);
 	}
 
@@ -40,9 +44,7 @@ public class ServicoController {
 
 	@RequestMapping("/listar")
 	public Iterable<Servico> listar() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		return servicoRepository.findByUser(user);
+		return servicoRepository.findByUser(getUsuarioLogado());
 	}
 
 	@RequestMapping(value = "/listarPorUsuario", method = GET)

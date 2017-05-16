@@ -1,5 +1,7 @@
 package br.com.workme.configuration;
 
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements HttpSessionListener{
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -65,5 +67,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    web
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+	}
+
+	@Override
+	public void sessionCreated(HttpSessionEvent event) {
+		event.getSession().setMaxInactiveInterval(-1);
+	}
+	
+	@Override
+	public void sessionDestroyed(HttpSessionEvent event) {
 	}
 }

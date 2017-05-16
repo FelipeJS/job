@@ -90,9 +90,9 @@ public class LoginController {
 	public User consultar(@RequestParam Long userId) {
 		return userService.findUserById(userId);
 	}
-	
+
 	@RequestMapping(value = "/consultarUsuarioLogado", method = GET)
-	public User consultarUsuarioLogado(){
+	public User consultarUsuarioLogado() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		return user;
