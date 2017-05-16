@@ -8,4 +8,6 @@ public interface TrabalhaParaRepository extends CrudRepository<TrabalhaPara, Lon
 	public Iterable<TrabalhaPara> findByUserFuncionario(User userFuncionario);
 
 	public TrabalhaPara findOneByUserFuncionarioAndUserEmpresa(User userFuncionario, User userEmpresa);
+
+	public Iterable<TrabalhaPara> findByUserEmpresa(User userEmpresa);
 }

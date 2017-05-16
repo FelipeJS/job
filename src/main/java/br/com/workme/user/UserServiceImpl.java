@@ -1,5 +1,6 @@
 package br.com.workme.user;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -15,8 +16,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
 	@Autowired
 	private RoleRepository roleRepository;
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -42,5 +45,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Iterable<User> findByTipo(int tipo) {
 		return userRepository.findByTipo(tipo);
+	}
+
+	@Override
+	public Iterable<User> findAllById(ArrayList<Long> ids) {
+		return userRepository.findAllById(ids);
 	}
 }

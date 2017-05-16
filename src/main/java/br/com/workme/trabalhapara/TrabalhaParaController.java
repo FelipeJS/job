@@ -2,6 +2,8 @@ package br.com.workme.trabalhapara;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +32,16 @@ public class TrabalhaParaController {
 	@RequestMapping("/listar")
 	public Iterable<TrabalhaPara> listar() {
 		return trabalhaParaRepository.findByUserFuncionario(getUsuarioLogado());
+	}
+
+	@RequestMapping("/listarFuncionarios")
+	public Iterable<User> listarFuncionarios() {
+		Iterable<TrabalhaPara> funcionarios = trabalhaParaRepository.findByUserEmpresa(getUsuarioLogado());
+		ArrayList<Long> ids = new ArrayList<>();
+		for (TrabalhaPara funcionario : funcionarios) {
+			ids.add(funcionario.getUserFuncionario().getId());
+		}
+		return userService.findAllById(ids);
 	}
 
 	@RequestMapping(value = "/salvar", method = GET)

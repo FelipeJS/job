@@ -54,7 +54,6 @@ public class LoginController {
 			modelAndView.addObject("successMessage", "Usuário cadastrado com sucesso");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");
-
 		}
 		return modelAndView;
 	}
