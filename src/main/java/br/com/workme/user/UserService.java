@@ -1,15 +1,49 @@
 package br.com.workme.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
-public interface UserService {
-	public User findUserByEmail(String email);
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-	public User findUserById(Long id);
+import br.com.workme.role.Role;
+import br.com.workme.role.RoleRepository;
 
-	public Iterable<User> findByTipo(int tipo);
+@Service("userService")
+public class UserService {
 
-	public void saveUser(User user);
+	@Autowired
+	private UserRepository userRepository;
 
-	public Iterable<User> findAllById(ArrayList<Long> ids);
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public User findUserById(Long id) {
+		return userRepository.findOneById(id);
+	}
+
+	public void saveUser(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setActive(1);
+		Role userRole = roleRepository.findByRole("ADMIN");
+		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		userRepository.save(user);
+	}
+
+	public Iterable<User> findByTipo(int tipo) {
+		return userRepository.findByTipo(tipo);
+	}
+
+	public Iterable<User> findAllById(ArrayList<Long> ids) {
+		return userRepository.findAllById(ids);
+	}
 }
