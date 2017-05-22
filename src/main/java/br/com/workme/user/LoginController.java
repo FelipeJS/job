@@ -66,7 +66,7 @@ public class LoginController {
 	@RequestMapping(value = "/admin/home", method = GET)
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("userName", getUsuarioLogado().getName() + " " + getUsuarioLogado().getLastName() + " (" + getUsuarioLogado().getEmail() + ")");
+		modelAndView.addObject("userName", getUsuarioLogado().getName() + " (" + getUsuarioLogado().getEmail() + ")");
 		modelAndView.addObject("adminMessage", "Conteúdo disponível para administradores");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;

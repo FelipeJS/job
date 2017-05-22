@@ -29,7 +29,7 @@ public class Solicitacao {
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
-	
+
 	@OneToOne
 	@JoinColumn(name = "user_id_analise", referencedColumnName = "user_id")
 	private User userAnalise;
@@ -37,10 +37,8 @@ public class Solicitacao {
 	@Column(name = "dh_solicitacao")
 	private Date dhSolicitacao;
 
-	@Column(name = "descricao")
 	private String descricao;
 
-	@Column(name = "status")
 	private int status;
 
 	@Column(name = "motivo_recusado")

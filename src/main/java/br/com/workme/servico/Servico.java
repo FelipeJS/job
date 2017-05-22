@@ -30,6 +30,8 @@ public class Servico {
 	private String categoria;
 
 	private String descricao;
+	
+	private int active;
 
 	public Long getCdServico() {
 		return cdServico;
@@ -69,5 +71,13 @@ public class Servico {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
 	}
 }

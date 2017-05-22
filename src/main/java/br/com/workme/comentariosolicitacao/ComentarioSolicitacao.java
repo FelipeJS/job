@@ -28,7 +28,6 @@ public class ComentarioSolicitacao {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
-	@Column(name = "descricao")
 	private String descricao;
 
 	public Long getCdComentarioSolicitacao() {

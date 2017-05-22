@@ -24,11 +24,11 @@ public class ServicoController {
 	@Autowired
 	private UserService userService;
 
-	public User getUsuarioLogado(){
+	public User getUsuarioLogado() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return userService.findUserByEmail(auth.getName());
 	}
-	
+
 	@RequestMapping(value = "/salvar", method = POST)
 	public Servico salvar(@RequestBody Servico servico) {
 		servico.setUser(getUsuarioLogado());
@@ -38,19 +38,20 @@ public class ServicoController {
 	@RequestMapping(value = "/excluir", method = GET)
 	public Long excluir(@RequestParam Long cdServico) {
 		Servico servico = servicoRepository.findOneByCdServico(cdServico);
-		servicoRepository.delete(servico);
+		servico.setActive(0);
+		servicoRepository.save(servico);
 		return servico.getCdServico();
 	}
 
 	@RequestMapping("/listar")
 	public Iterable<Servico> listar() {
-		return servicoRepository.findByUser(getUsuarioLogado());
+		return servicoRepository.findByUserAndActive(getUsuarioLogado(), 1);
 	}
 
 	@RequestMapping(value = "/listarPorUsuario", method = GET)
 	public Iterable<Servico> listarByUser(@RequestParam Long userId) {
 		User user = userService.findUserById(userId);
-		return servicoRepository.findByUser(user);
+		return servicoRepository.findByUserAndActive(user, 1);
 	}
 
 	@RequestMapping(value = "/consultar", method = GET)

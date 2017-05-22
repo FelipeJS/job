@@ -34,20 +34,14 @@ public class User {
 	@NotEmpty(message = "*Preencha o email")
 	private String email;
 
-	@Column(name = "password")
 	@Length(min = 5, message = "*Senha precisa ter pelo menos 5 caracteres")
 	@NotEmpty(message = "*Preencha a senha")
 	@Transient
 	private String password;
 
-	@Column(name = "name")
 	@NotEmpty(message = "*Preencha o nome")
 	private String name;
 
-	@Column(name = "last_name")
-	private String lastName;
-
-	@Column(name = "active")
 	private int active;
 
 	@JsonIgnore
@@ -59,34 +53,24 @@ public class User {
 	@Column(name = "documento", unique = true)
 	private String documento;
 
-	@Column(name = "fantasia")
-	private String fantasia;
-
 	@NotEmpty(message = "*Preencha o telefone")
-	@Column(name = "telefone")
 	private String telefone;
 
 	@NotEmpty(message = "*Preencha o endereço")
-	@Column(name = "endereco")
 	private String endereco;
 
 	@NotEmpty(message = "*Preencha o bairro")
-	@Column(name = "bairro")
 	private String bairro;
 
 	@NotEmpty(message = "*Preencha a cidade")
-	@Column(name = "cidade")
 	private String cidade;
 
 	@NotEmpty(message = "*Preencha o estado")
-	@Column(name = "estado")
 	private String estado;
 
-	@Column(name = "tipo")
 	private int tipo;
 
 	@NotEmpty(message = "*Preencha a categoria")
-	@Column(name = "categoria")
 	private String categoria;
 
 	public Long getId() {
@@ -121,14 +105,6 @@ public class User {
 		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public int getActive() {
 		return active;
 	}
@@ -151,14 +127,6 @@ public class User {
 
 	public void setDocumento(String documento) {
 		this.documento = documento;
-	}
-
-	public String getFantasia() {
-		return fantasia;
-	}
-
-	public void setFantasia(String fantasia) {
-		this.fantasia = fantasia;
 	}
 
 	public String getTelefone() {
