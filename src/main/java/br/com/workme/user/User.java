@@ -45,7 +45,6 @@ public class User {
 	private String name;
 
 	@Column(name = "last_name")
-	@NotEmpty(message = "*Preencha o sobrenome")
 	private String lastName;
 
 	@Column(name = "active")
@@ -56,11 +55,10 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@NotEmpty(message = "*Preencha o CPF/CNPJ")
+	@NotEmpty(message = "*Preencha o CPF")
 	@Column(name = "documento", unique = true)
 	private String documento;
 
-	@NotEmpty(message = "*Preencha o nome fantasia")
 	@Column(name = "fantasia")
 	private String fantasia;
 

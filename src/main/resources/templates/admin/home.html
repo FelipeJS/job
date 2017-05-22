@@ -1,84 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-
+<html>
 <head>
-<title>Admin Page</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script>
-	angular.module("work", []);
-	
-	angular.module("work").controller("servicoCtrl", function ($scope, $http) {
-		$scope.salvar = function (servico) {
-			$http.post("http://localhost:9090/servico/salvar", servico).success(function (resultadoDoResponse) {
-				$scope.servico = resultadoDoResponse;
-			});
-		};		
-	});
-	
-	angular.module("work").controller("solicitacaoCtrl", function ($scope, $http) {
-		$scope.solicitacao = {};
-		$scope.solicitacao.servico = {"cdServico":14,"nome":"Desenvolvimento de Software","categoria":"Engenharia do Software","descricao":"Desenvolvimento de software sob demanda para os mais diversos tipos de clientes, com excelência e garantia de qualidade.","ativo":1};
-		$scope.salvar = function (solicitacao) {
-			$http.post("http://localhost:9090/solicitacao/salvar", solicitacao).success(function (resultadoDoResponse) {
-				$scope.solicitacao = resultadoDoResponse;
-			});
-		};
-		
-		$scope.aceitar = function () {
-			$http.post("http://localhost:9090/solicitacao/aceitar", $scope.solicitacao).success(function (resultadoDoResponse) {
-				$scope.solicitacao = resultadoDoResponse;
-			});
-		};	
-	});
-</script>
+	<meta http-equiv="refresh" content="0; url=http://localhost:9090/www/index.html" />
 </head>
-
-<body ng-app="work">
-	<div class="container">
-	
-		<form th:action="@{/logout}" method="get">
-			<button class="btn btn-md btn-danger btn-block" name="registration"
-				type="Submit">Logout</button>
-		</form>    
-		
-		<div class="panel-group" style="margin-top:40px">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
-				</div>
-				<div class="panel-body">
-					<label>Cadastro de Serviço</label>
-					<form ng-controller="servicoCtrl">
-						<p>Name : <input type="text" ng-model="servico.nome"></p>
-						<p>Categoria : <input type="text" ng-model="servico.categoria"></p>
-						<p>descricao : <input type="text" ng-model="servico.descricao"></p>
-						<p>ativo : <input type="text" ng-model="servico.ativo"></p>
-						<p>codigo : <input type="text" ng-model="servico.cdServico"></p>
-  						<input type="submit" value="Salvar" ng-click="salvar(servico)">
-					</form>
-					
-					<label>Cadastro de Solicitação</label>
-					<form ng-controller="solicitacaoCtrl">
-						<p>Codigo Solicitacao : <input type="text" ng-model="solicitacao.cdSolicitacao"></p>
-						<p>Descricao : <input type="text" ng-model="solicitacao.descricao"></p>
-  						<input type="submit" value="Salvar" ng-click="salvar(solicitacao)">
-					</form>
-					
-					<label>Aceitar Solicitação</label>
-					<form ng-controller="solicitacaoCtrl">
-  						<input type="submit" value="Aceitar" ng-click="aceitar()">
-					</form>
-					
-					<img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400" alt="Beer" /> 
-				</div>
-				<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-			</div>
-		</div>
-	</div>
+<body>
+	<p><a href="http://localhost:9090/www/index.html">Redirecionar para o Sistema</a></p>
 </body>
 </html>

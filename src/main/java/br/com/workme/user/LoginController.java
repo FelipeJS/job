@@ -24,6 +24,11 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
+	public User getUsuarioLogado(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userService.findUserByEmail(auth.getName());
+	}
+	
 	@RequestMapping(value = { "/", "/login" }, method = GET)
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -61,9 +66,7 @@ public class LoginController {
 	@RequestMapping(value = "/admin/home", method = GET)
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		modelAndView.addObject("userName", getUsuarioLogado().getName() + " " + getUsuarioLogado().getLastName() + " (" + getUsuarioLogado().getEmail() + ")");
 		modelAndView.addObject("adminMessage", "Conteúdo disponível para administradores");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
@@ -92,8 +95,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/consultarUsuarioLogado", method = GET)
 	public User consultarUsuarioLogado() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		return user;
+		return getUsuarioLogado();
 	}
 }

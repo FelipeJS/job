@@ -1,142 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Registration Form</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Cadastro</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
 </head>
-<body>
+<body style="background-color: #e9ebee;">
+	
 	<form th:action="@{/}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Fazer Login</button>
+		<button class="entrar" type="Submit">Fazer Login</button>
 	</form>	
 	
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					<h2>Cadastrar Usuário</h2>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}" 
-								class="validation-message"></label>
-							<input type="text" th:field="*{documento}" placeholder="CPF/CNPJ" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-									class="validation-message"></label>
-							<input type="text" th:field="*{name}" placeholder="Nome" class="form-control" /> 
-						</div>
-					</div>
+	<form autocomplete="off" action="#" th:action="@{/registration}"
+		th:object="${user}" method="post" class="form-cadastro" role="form">
+		
+		<h2 class="titulo">Cadastrar Usuário</h2>
+	
+		<label th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}" class="validation-message"></label>
+		<input type="text" th:field="*{documento}" placeholder="CPF" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
+		<input type="text" th:field="*{name}" placeholder="Nome" class="form-control" /> 
 
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" 
-								class="validation-message"></label>
-							<input type="text" th:field="*{lastName}" placeholder="Sobrenome" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('fantasia')}" th:errors="*{fantasia}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{fantasia}"
-								placeholder="Nome Fantasia" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{telefone}" placeholder="Telefone" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{email}" placeholder="Email"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="password" th:field="*{password}"
-								placeholder="Password" class="form-control" /> <label
-								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{endereco}" placeholder="Endereço" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{bairro}" placeholder="Bairro" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{cidade}" placeholder="Cidade" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{estado}" placeholder="Estado" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{tipo}" placeholder="Tipo" class="form-control" /> 
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label	th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" /> 
-						</div>
-					</div>
+		<label th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="validation-message"></label>
+		<input type="text" th:field="*{telefone}" placeholder="Telefone" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
+		<input type="text" th:field="*{email}" placeholder="Email" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+		<input type="password" th:field="*{password}" placeholder="Password" class="form-control" /> 
 
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
-						</div>
-					</div>
-					
-					<span th:utext="${successMessage}"></span>
-				</form>
-			</div>
-		</div>
-	</div>
+		<label th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}" class="validation-message"></label>
+		<input type="text" th:field="*{endereco}" placeholder="Endereço" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}" class="validation-message"></label>
+		<input type="text" th:field="*{bairro}" placeholder="Bairro" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}" class="validation-message"></label>
+		<input type="text" th:field="*{cidade}" placeholder="Cidade" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="validation-message"></label>
+		<input type="text" th:field="*{estado}" placeholder="Estado" class="form-control" /> 
+		
+		<label th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="validation-message"></label>
+		<input type="text" th:field="*{tipo}" placeholder="Tipo" class="form-control" th:value="${1}"/> 
+		
+		<label th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" class="validation-message"></label>
+		<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" /> 
+
+		<button type="submit" class="cadastrar">Cadastrar</button>
+		
+		<span th:utext="${successMessage}"></span>
+	</form>
 </body>
 </html>
