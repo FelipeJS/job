@@ -7,6 +7,14 @@ import br.com.workme.servico.Servico;
 import br.com.workme.user.User;
 
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
+	public Iterable<Solicitacao> findByUserOrderByUserDesc(Iterable<User> users);
+
+	public Iterable<Solicitacao> findByUserOrderByCdSolicitacaoDesc(User user);
+
+	public Solicitacao findOneByCdSolicitacao(Long cdSolicitacao);
+
+	public Iterable<Solicitacao> findByServicoInOrderByCdSolicitacaoDesc(Iterable<Servico> servicos);
+
 	@Query(value = "SELECT S.* FROM servico V INNER JOIN solicitacao S ON S.CD_SERVICO = V.CD_SERVICO "
 			+ "INNER JOIN user U ON U.USER_ID = S.USER_ID "
 			+ "WHERE V.USER_ID = ?1 AND S.STATUS = 1 ORDER BY S.CD_SOLICITACAO DESC", nativeQuery = true)
@@ -21,12 +29,4 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 			+ "INNER JOIN user U ON U.USER_ID = S.USER_ID "
 			+ "WHERE V.USER_ID = ?1 AND S.STATUS = 3 ORDER BY S.CD_SOLICITACAO DESC", nativeQuery = true)
 	public Iterable<Solicitacao> findByUserIdFechado(Long userId);
-
-	public Iterable<Solicitacao> findByUserOrderByUserDesc(Iterable<User> users);
-
-	public Iterable<Solicitacao> findByUserOrderByUserDesc(User user);
-
-	public Solicitacao findOneByCdSolicitacao(Long cdSolicitacao);
-
-	public Iterable<Solicitacao> findByServicoIn(Iterable<Servico> servicos);
 }

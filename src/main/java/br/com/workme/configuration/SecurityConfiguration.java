@@ -50,12 +50,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
-				.antMatchers("/jquery/jquery.min.js").permitAll()
-				.antMatchers("/jquery/jquery.maskedinput.min.js").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+				.antMatchers("/index.html").hasAuthority("ADMIN").anyRequest()
 				.authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/admin/home")
+				.defaultSuccessUrl("/index.html")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.and().logout()
@@ -68,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+	       .antMatchers("/resources/**", "/static/**", "/css/**", "/jquery/**", "/images/**");
 	}
 
 	@Override

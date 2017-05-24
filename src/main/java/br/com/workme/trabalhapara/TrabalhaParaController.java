@@ -37,7 +37,8 @@ public class TrabalhaParaController {
 	@RequestMapping(value = "/consultar", method = GET)
 	public Boolean consultar(@RequestParam Long cdUsuarioFuncionario) {
 		User userFuncionario = userService.findUserById(cdUsuarioFuncionario);
-		TrabalhaPara trabalhaPara = trabalhaParaRepository.findOneByUserFuncionarioAndUserEmpresa(userFuncionario, getUsuarioLogado());
+		TrabalhaPara trabalhaPara = trabalhaParaRepository.findOneByUserFuncionarioAndUserEmpresa(userFuncionario,
+				getUsuarioLogado());
 		if (trabalhaPara == null) {
 			return false;
 		} else {

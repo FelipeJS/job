@@ -41,20 +41,19 @@
 						</td>
 					</tr>
 				</tbody>
-				 
-				<div align="center" th:if="${param.error}">
-					<p style="font-size: 20; color: #FF1C19;">Email ou senha inválidos</p>
-				</div>
 			</table>
-			<button class="entrar" name="Submit" value="Entrar" type="Submit" th:text="Entrar"></button>
+			<div align="center" th:if="${param.error}">
+				<p style="font-size: 20; color: #FF1C19;">Email ou senha inválidos</p>
+			</div>
+			<button class="button" name="Submit" value="Entrar" type="Submit" th:text="Entrar"></button>
 			<div style="text-align: center;">
 				<a href="https://www.facebook.com/recover/initiate?lwv=110" data-testid="forgot_account_link">Esqueceu a conta?</a>
 			</div>
 		</form>
 		<form th:action="@{/registration}" method="get">
-			<button class="cadastrar" type="Submit">Cadastrar</button>
+			<button class="button" type="Submit">Cadastrar</button>
 		</form>	
-		<label class="sobre">Sobre o Sistema Meu Trabalho</label>
+		<label class="sobre">Sobre o Sistema MeuTrabalho</label>
 		<p>O sistema MeuTrabalho foi desenvolvido para atender solicitações de clientes de forma ágil e prática. 
 		As solicitações são realizadas através do site ou em qualquer celular com sistema operacional Android ou IOS. 
 		O MeuTrabalho conta com um leque de empresas oferecendo diversos tipos de serviços para total satisfação dos clientes.</p>

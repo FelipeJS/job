@@ -82,7 +82,8 @@ public class SolicitacaoService {
 		if (empresasFuncionarios.size() > 0) {
 			for (TrabalhaPara trabalhaPara : empresasFuncionarios) {
 				Iterable<Servico> servicosDaEmpresa = servicoRepository.findByUser(trabalhaPara.getUserEmpresa());
-				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository.findByServicoIn(servicosDaEmpresa);
+				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository
+						.findByServicoInOrderByCdSolicitacaoDesc(servicosDaEmpresa);
 
 				for (Solicitacao solicitacao : solicitacoesDaEmpresa) {
 					if (solicitacao.getStatus() == 1)
@@ -105,7 +106,8 @@ public class SolicitacaoService {
 		if (empresasFuncionarios.size() > 0) {
 			for (TrabalhaPara trabalhaPara : empresasFuncionarios) {
 				Iterable<Servico> servicosDaEmpresa = servicoRepository.findByUser(trabalhaPara.getUserEmpresa());
-				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository.findByServicoIn(servicosDaEmpresa);
+				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository
+						.findByServicoInOrderByCdSolicitacaoDesc(servicosDaEmpresa);
 
 				for (Solicitacao solicitacao : solicitacoesDaEmpresa) {
 					if (solicitacao.getStatus() == 2)
@@ -128,7 +130,8 @@ public class SolicitacaoService {
 		if (empresasFuncionarios.size() > 0) {
 			for (TrabalhaPara trabalhaPara : empresasFuncionarios) {
 				Iterable<Servico> servicosDaEmpresa = servicoRepository.findByUser(trabalhaPara.getUserEmpresa());
-				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository.findByServicoIn(servicosDaEmpresa);
+				Iterable<Solicitacao> solicitacoesDaEmpresa = solicitacaoRepository
+						.findByServicoInOrderByCdSolicitacaoDesc(servicosDaEmpresa);
 
 				for (Solicitacao solicitacao : solicitacoesDaEmpresa) {
 					if (solicitacao.getStatus() == 3)
@@ -143,6 +146,6 @@ public class SolicitacaoService {
 	}
 
 	public Iterable<Solicitacao> listarMinhasSolicitacoes() {
-		return solicitacaoRepository.findByUserOrderByUserDesc(getUsuarioLogado());
+		return solicitacaoRepository.findByUserOrderByCdSolicitacaoDesc(getUsuarioLogado());
 	}
 }

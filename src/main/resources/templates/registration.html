@@ -7,64 +7,82 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
 	<script th:src="@{/jquery/jquery.min.js}"></script>
 	<script th:src="@{/jquery/jquery.maskedinput.min.js}"></script>
+	<script th:src="@{/jquery/valida_cpf_cnpj.js}"></script>
 	<script>
 		$(document).ready(function(){
 			$("#phone").mask("(99) 99999-9999");
 			$("#CPF").mask("999.999.999-99");
 			
 			$("#cadastrar").click(function(){
-			    //$("#tipo").val("1");
+			    $("#tipo").val("1");
 			});
 		});
 	</script>
 </head>
-<body style="background-color: #e9ebee;">
+<body>
+	<header>
+		<form th:action="@{/}" method="get">
+			<button class="button" type="Submit">Fazer Login</button>
+		</form>
+	</header>
 	
-	<form th:action="@{/}" method="get">
-		<button class="entrar" type="Submit">Fazer Login</button>
-	</form>
+	<section>	
+		<form autocomplete="off" action="#" th:action="@{/registration}"
+			th:object="${user}" method="post" class="form-cadastro" role="form">
+			
+			<h2 class="titulo">Cadastro</h2>
+			
+			<span th:utext="${successMessage}"></span>
+			
+			<label th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}" class="validation-message"></label>
+			<input id="CPF" type="text" th:field="*{documento}" placeholder="CPF" class="form-control validate" /> 
+			
+			<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
+			<input type="text" th:field="*{name}" placeholder="Nome" class="form-control" maxlength="150"/> 
 	
-	<form autocomplete="off" action="#" th:action="@{/registration}"
-		th:object="${user}" method="post" class="form-cadastro" role="form">
-		
-		<h2 class="titulo">Cadastro</h2>
+			<label th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="validation-message"></label>
+			<input id="phone" type="text" th:field="*{telefone}" placeholder="Telefone" class="form-control" /> 
+			
+			<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
+			<input type="text" th:field="*{email}" placeholder="Email" class="form-control" maxlength="150"/> 
+			
+			<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+			<input type="password" th:field="*{password}" placeholder="Password" class="form-control" maxlength="30"/> 
 	
-		<label th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}" class="validation-message"></label>
-		<input id="CPF" type="text" th:field="*{documento}" placeholder="CPF" class="form-control" /> 
-		
-		<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
-		<input type="text" th:field="*{name}" placeholder="Nome" class="form-control" maxlength="250"/> 
-
-		<label th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="validation-message"></label>
-		<input id="phone" type="text" th:field="*{telefone}" placeholder="Telefone" class="form-control" /> 
-		
-		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
-		<input type="text" th:field="*{email}" placeholder="Email" class="form-control" maxlength="250"/> 
-		
-		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-		<input type="password" th:field="*{password}" placeholder="Password" class="form-control" maxlength="250"/> 
-
-		<label th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}" class="validation-message"></label>
-		<input type="text" th:field="*{endereco}" placeholder="Endereço" class="form-control" maxlength="250"/> 
-		
-		<label th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}" class="validation-message"></label>
-		<input type="text" th:field="*{bairro}" placeholder="Bairro" class="form-control" maxlength="250"/> 
-		
-		<label th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}" class="validation-message"></label>
-		<input type="text" th:field="*{cidade}" placeholder="Cidade" class="form-control" maxlength="50"/> 
-		
-		<label th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="validation-message"></label>
-		<input type="text" th:field="*{estado}" placeholder="Estado" class="form-control" maxlength="50"/> 
-		
-		<label th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="validation-message"></label>
-		<input type="text" th:field="*{tipo}" placeholder="Tipo" class="form-control" id="tipo" /> 
-		
-		<label th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" class="validation-message"></label>
-		<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" maxlength="100"/> 
-
-		<button type="submit" class="cadastrar" id="cadastrar">Cadastrar</button>
-		
-		<span th:utext="${successMessage}"></span>
-	</form>
+			<label th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}" class="validation-message"></label>
+			<input type="text" th:field="*{endereco}" placeholder="Endereço" class="form-control" maxlength="150"/> 
+			
+			<label th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}" class="validation-message"></label>
+			<input type="text" th:field="*{bairro}" placeholder="Bairro" class="form-control" maxlength="100"/> 
+			
+			<label th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}" class="validation-message"></label>
+			<input type="text" th:field="*{cidade}" placeholder="Cidade" class="form-control" maxlength="50"/> 
+			
+			<label th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="validation-message"></label>
+			<input type="text" th:field="*{estado}" placeholder="Estado" class="form-control" maxlength="50"/> 
+			
+			<label th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="validation-message"></label>
+			<input type="hidden" th:field="*{tipo}" placeholder="Tipo" class="form-control" id="tipo" /> 
+			
+			<label th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" class="validation-message"></label>
+			<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" maxlength="100"/> 
+	
+			<button type="submit" class="button">Cadastrar</button>
+		</form>
+	</section>
+	<footer id="rodape">
+		<ul>
+			<li><a href="http://www.meutrabalho.com.br/registration">Cadastre-se</a></li>
+			<li><a href="http://www.meutrabalho.com.br/www/index.html">Entrar</a></li>
+			<li><a href="http://www.meutrabalho.com.br">WorkMe</a></li>
+			<li><a href="http://www.facebook.com">Facebook</a></li>
+			<li><a href="https://www.instagram.com/?hl=pt-br">Instagram</a></li>
+			<li><a href="https://www.getninjas.com.br">Sites em Comum</a></li>
+			<li><a href="http://www.meutrabalho.com.br">Sobre</a></li>
+			<li><a href="https://www.facebook.com/careers/?ref=pf">Carreiras</a></li>
+			<li><a href="http://www.meutrabalho.com.br">Termos</a></li>
+			<li><a href="https://www.facebook.com/help/?ref=pf">Ajuda</a></li>
+		</ul>
+	</footer>
 </body>
 </html>
