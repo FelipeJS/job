@@ -50,7 +50,7 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@CPF
+	@CPF(message = "*CPF inválido")
 	@NotEmpty(message = "*Preencha o CPF")
 	@Column(name = "documento", unique = true)
 	private String documento;

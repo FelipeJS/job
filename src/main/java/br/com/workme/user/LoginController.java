@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class LoginController {
-
 	private static final int CLIENTE = 1;
 	private static final int EMPRESA = 2;
 
@@ -63,7 +62,16 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
-
+	
+	@RequestMapping(value = "/admin/home", method = GET)
+	public ModelAndView home() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("userName", getUsuarioLogado().getName() + " (" + getUsuarioLogado().getEmail() + ")");
+		modelAndView.addObject("adminMessage", "Conteúdo disponível para administradores");
+		modelAndView.setViewName("admin/home");
+		return modelAndView;
+	}
+	
 	@RequestMapping("/listarClientes")
 	public Iterable<User> listarClientes() {
 		return userService.findByTipo(CLIENTE);

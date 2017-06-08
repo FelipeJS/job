@@ -17,7 +17,6 @@ import br.com.workme.user.UserService;
 @RestController
 @RequestMapping("/trabalhaPara")
 public class TrabalhaParaController {
-
 	@Autowired
 	private TrabalhaParaRepository trabalhaParaRepository;
 

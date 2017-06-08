@@ -7,7 +7,6 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
 	<script th:src="@{/jquery/jquery.min.js}"></script>
 	<script th:src="@{/jquery/jquery.maskedinput.min.js}"></script>
-	<script th:src="@{/jquery/valida_cpf_cnpj.js}"></script>
 	<script>
 		$(document).ready(function(){
 			$("#phone").mask("(99) 99999-9999");
@@ -65,9 +64,15 @@
 			<input type="hidden" th:field="*{tipo}" placeholder="Tipo" class="form-control" id="tipo" /> 
 			
 			<label th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" class="validation-message"></label>
-			<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" maxlength="100"/> 
+			<input type="text" th:field="*{categoria}" placeholder="Categoria" class="form-control" maxlength="100"/>
+			
+			<label th:if="${#fields.hasErrors('empresa')}" th:errors="*{empresa}" class="validation-message">Ver Empresas</label>
+			<select th:field="*{visivelEmpresa}" th:remove="all-but-first">
+                <option th:each="visivelEmpresa : ${empresas}" 
+                        th:value="${visivelEmpresa}" th:text="${visivelEmpresa.nome}">Credit card</option>
+            </select>
 	
-			<button type="submit" class="button">Cadastrar</button>
+			<button type="submit" class="button" id="cadastrar">Cadastrar</button>
 		</form>
 	</section>
 	<footer id="rodape">

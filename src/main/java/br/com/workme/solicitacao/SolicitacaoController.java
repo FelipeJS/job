@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/solicitacao")
 public class SolicitacaoController {
-
 	@Autowired
 	SolicitacaoService solicitacaoService;
 
